@@ -113,6 +113,8 @@ namespace Game {
 
         Settings.controller.dpad_shop = stob(Conf[ControllerSection]["dpad_shop"]);
         CVar_SetS32("gDpadShop", Settings.controller.dpad_shop);
+
+        Settings.controller.controller_config = stob(Conf[ControllerSection]["controller_config"]);
         
         // Cheats
         Settings.cheats.debug_mode = stob(Conf[CheatSection]["debug_mode"]);

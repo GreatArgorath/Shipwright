@@ -43,6 +43,7 @@ struct SoHConfigType {
         bool dpad_pause_name = false;
         bool dpad_ocarina_text = false;
         bool dpad_shop = false;
+        bool controller_config = false;
     } controller;
 
     // Cheats

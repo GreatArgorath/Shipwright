@@ -344,6 +344,11 @@ namespace SohImGui {
             }
 
             if (ImGui::BeginMenu("Controller")) {
+
+                HOOK(ImGui::MenuItem("Controller Config", nullptr, &Game::Settings.controller.controller_config));
+
+                ImGui::Separator();
+
                 ImGui::Text("Gyro Sensitivity: %d %%", static_cast<int>(100 * Game::Settings.controller.gyro_sensitivity));
                 if (ImGui::SliderFloat("##GYROSCOPE", &Game::Settings.controller.gyro_sensitivity, 0.0f, 1.0f, "")) {
                     needs_save = true;
@@ -386,7 +391,7 @@ namespace SohImGui {
                     CVar_SetS32("gDpadShop", Game::Settings.controller.dpad_shop);
                     needs_save = true;
                 }
-
+                
                 ImGui::EndMenu();
             }
 
@@ -551,6 +556,11 @@ namespace SohImGui {
         }
 
         ImGui::End();
+
+        if (Game::Settings.controller.controller_config) {
+            ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
+            ImGui::Begin("Controller Config", nullptr, ImGuiWindowFlags_None);
+        }
 
         if (Game::Settings.debug.soh) {
             const float framerate = ImGui::GetIO().Framerate;
