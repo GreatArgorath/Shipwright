@@ -234,7 +234,7 @@ void func_80ABF4C8(EnOkarinaTag* this, GlobalContext* globalCtx) {
     if (globalCtx->msgCtx.ocarinaMode == OCARINA_MODE_04) {
         this->actionFunc = func_80ABF28C;
     } else if (globalCtx->msgCtx.ocarinaMode == OCARINA_MODE_03) {
-        if (!gSaveContext.n64ddFlag || (gSaveContext.n64ddFlag && GetRandoSettingValue(RSK_DOOR_OF_TIME) != 2)) {
+        if (!gSaveContext.n64ddFlag || (gSaveContext.n64ddFlag && Randomizer_GetSettingValue(RSK_DOOR_OF_TIME) != 2)) {
             func_80078884(NA_SE_SY_CORRECT_CHIME);
         }
         if (this->switchFlag >= 0) {
@@ -257,7 +257,7 @@ void func_80ABF4C8(EnOkarinaTag* this, GlobalContext* globalCtx) {
                 break;
             case 4:
                 if (gSaveContext.n64ddFlag) {
-                    int doorOfTime = GetRandoSettingValue(RSK_DOOR_OF_TIME);
+                    int doorOfTime = Randomizer_GetSettingValue(RSK_DOOR_OF_TIME);
                     if (doorOfTime == 2 &&
                         (INV_CONTENT(ITEM_OCARINA_FAIRY) != ITEM_OCARINA_TIME ||
                          !CHECK_QUEST_ITEM(QUEST_KOKIRI_EMERALD) || !CHECK_QUEST_ITEM(QUEST_GORON_RUBY) ||
@@ -323,13 +323,9 @@ void func_80ABF708(EnOkarinaTag* this, GlobalContext* globalCtx) {
 }
 
 void GivePlayerRandoRewardSunSong(EnOkarinaTag* song, GlobalContext* globalCtx, RandomizerCheck check) {
-    if (song->actor.parent != NULL && song->actor.parent->id == GET_PLAYER(globalCtx)->actor.id &&
-        !Flags_GetTreasure(globalCtx, 0x1F)) {
-        Flags_SetTreasure(globalCtx, 0x1F);
-    } else if (!Flags_GetTreasure(globalCtx, 0x1F)) {
-        GetItemID getItemId = GetRandomizedItemIdFromKnownCheck(check, GI_LETTER_ZELDA);
-        func_8002F434(&song->actor, globalCtx, getItemId, 10000.0f, 100.0f);
-    }
+    Flags_SetTreasure(globalCtx, 0x1F);
+    GetItemEntry getItemEntry = Randomizer_GetItemFromKnownCheck(check, GI_LETTER_ZELDA);
+    GiveItemEntryFromActor(&song->actor, globalCtx, getItemEntry, 10000.0f, 100.0f);
 }
 
 void func_80ABF7CC(EnOkarinaTag* this, GlobalContext* globalCtx) {
@@ -338,15 +334,11 @@ void func_80ABF7CC(EnOkarinaTag* this, GlobalContext* globalCtx) {
 
     if ((Message_GetState(&globalCtx->msgCtx) == TEXT_STATE_EVENT) && Message_ShouldAdvance(globalCtx)) {
         Message_CloseTextbox(globalCtx);
-        if (!gSaveContext.n64ddFlag) {
-            if (!CHECK_QUEST_ITEM(QUEST_SONG_SUN)) {
-                globalCtx->csCtx.segment = SEGMENTED_TO_VIRTUAL(&gSunSongGraveSunSongTeachCs);
-                gSaveContext.cutsceneTrigger = 1;
-            }
-        } else {
-            if (!Flags_GetTreasure(globalCtx, 0x1F)) {
-                GivePlayerRandoRewardSunSong(this, globalCtx, RC_SONG_FROM_ROYAL_FAMILYS_TOMB);
-            }
+        if (!gSaveContext.n64ddFlag && !CHECK_QUEST_ITEM(QUEST_SONG_SUN)) {
+            globalCtx->csCtx.segment = SEGMENTED_TO_VIRTUAL(&gSunSongGraveSunSongTeachCs);
+            gSaveContext.cutsceneTrigger = 1;
+        } else if (!Flags_GetTreasure(globalCtx, 0x1F)) {
+            GivePlayerRandoRewardSunSong(this, globalCtx, RC_SONG_FROM_ROYAL_FAMILYS_TOMB);
         }
         this->actionFunc = func_80ABF708;
     }

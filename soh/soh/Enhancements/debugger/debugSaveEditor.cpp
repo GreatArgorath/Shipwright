@@ -944,7 +944,7 @@ void DrawFlagsTab() {
         DrawGroupWithBorder([&]() {
             ImGui::Text("A");
             InsertHelpHoverText("First-time overworld entrance cs related");
-            DrawFlagArray16("eci1", gSaveContext.eventChkInf[10]);
+            DrawFlagArray16("eci10", gSaveContext.eventChkInf[10]);
         });
 
         DrawGroupWithBorder([&]() {
@@ -1001,7 +1001,7 @@ void DrawFlagsTab() {
 
 // Draws a combo that lets you choose and upgrade value from a drop-down of text values
 void DrawUpgrade(const std::string& categoryName, int32_t categoryId, const std::vector<std::string>& names) {
-    ImGui::Text(categoryName.c_str());
+    ImGui::Text("%s", categoryName.c_str());
     ImGui::SameLine();
     ImGui::PushID(categoryName.c_str());
     if (ImGui::BeginCombo("##upgrade", names[CUR_UPG_VALUE(categoryId)].c_str())) {
@@ -1435,7 +1435,7 @@ void DrawPlayerTab() {
         InsertHelpHoverText("Link's speed along the Y plane. Caps at -20");
 
         ImGui::InputScalar("Wall Height", ImGuiDataType_Float, &player->wallHeight);
-        InsertHelpHoverText("\"height used to determine whether link can climb or grab a ledge at the top\"");
+        InsertHelpHoverText("Height used to determine whether Link can climb or grab a ledge at the top");
 
         ImGui::InputScalar("Invincibility Timer", ImGuiDataType_S8, &player->invincibilityTimer);
         InsertHelpHoverText("Can't take damage while this is nonzero");
@@ -1561,6 +1561,18 @@ void DrawPlayerTab() {
             ImGui::InputScalar("C Down", ImGuiDataType_U8, &gSaveContext.equips.buttonItems[2], &one, NULL);
             ImGui::SameLine();
             ImGui::InputScalar("C Right", ImGuiDataType_U8, &gSaveContext.equips.buttonItems[3], &one, NULL);
+
+            if (CVar_GetS32("gDpadEquips", 0)) {
+                ImGui::NewLine();
+                ImGui::Text("Current D-pad Equips");
+                ImGui::InputScalar("D-pad Up  ", ImGuiDataType_U8, &gSaveContext.equips.buttonItems[4], &one, NULL); // Two spaces at the end for aligning, not elegant but it's working
+                ImGui::SameLine();
+                ImGui::InputScalar("D-pad Down", ImGuiDataType_U8, &gSaveContext.equips.buttonItems[5], &one, NULL);
+                // Intentionnal to not put everything on the same line, else it's taking too much for lower resolution.
+                ImGui::InputScalar("D-pad Left", ImGuiDataType_U8, &gSaveContext.equips.buttonItems[6], &one, NULL);
+                ImGui::SameLine();
+                ImGui::InputScalar("D-pad Right", ImGuiDataType_U8, &gSaveContext.equips.buttonItems[7], &one, NULL);
+            }
         });
 
     } else {
