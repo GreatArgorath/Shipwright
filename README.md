@@ -196,8 +196,6 @@ Take [this survey](https://retroarchopenhardware.com/survey.php) to increase cha
     MicTheMicrophone | Gwonam / The King
     Amphibibro | Link
     AceHeart | Zelda
-    
-![lusdark](https://user-images.githubusercontent.com/60364512/231593818-b8eb5475-c7f9-4d7c-9dfe-503fa3e3cd71.png#gh-dark-mode-only)
-![luslight](https://user-images.githubusercontent.com/60364512/231593972-3097563b-98e5-4a40-ac35-7a5b9bd86aa1.png#gh-light-mode-only)
 
-
+[![libultrashiplogo-dark](https://user-images.githubusercontent.com/60364512/231594676-e6f02dcc-dbff-4551-92c2-d6ca7c6f2177.png#gh-dark-mode-only)](https://www.github.com/kenix3/libultraship/)
+[![libultrashiplogo-light](https://user-images.githubusercontent.com/60364512/231594846-25de62c7-a303-47ff-ac16-72ecb4d2d2ae.png#gh-light-mode-only)](https://www.github.com/kenix3/libultraship/)
